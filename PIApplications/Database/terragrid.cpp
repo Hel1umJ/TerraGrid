@@ -3,15 +3,15 @@
 #include <stdio.h>
 #include <string>
 #include <sqlite3.h>
-int main(int argc, char* argv[]){
-	printf("Hello World\n");
-	return 0;
-}
+//int main(int argc, char* argv[]){
+//	printf("Hello World\n");
+//	return 0;
+//}
 
+char DB_NAME[32] = "terragrid.db"; 
 
 //TODO: Connect to a DB
 
-#include <sqlite3.h> 
 
 int main(int argc, char* argv[]) {
    sqlite3 *db;
