@@ -1,7 +1,7 @@
 --CREATE DATABASE terragrid;
 
 --CREATE TABLE Modules (
---    ModuleCOORD char(10) NOT NULL,
+--    ModuleCOORD char(10) NOT NULL, --'(xx,yy,zz)'
 --    Humidity FLOAT(10),
 --    Temperature FLOAT(10),
 --    SoilMoisture FLOAT(10),

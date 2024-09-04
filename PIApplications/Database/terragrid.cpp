@@ -1,39 +1,44 @@
+
+/*
+*Includes
+*/
+//Std library includes
 #include <cstdlib>
 #include <cstdio>
 #include <stdio.h>
 #include <string>
+
+//Project Includes
 #include <sqlite3.h>
-//int main(int argc, char* argv[]){
-//	printf("Hello World\n");
-//	return 0;
-//}
 
-char DB_NAME[32] = "terragrid.db"; 
 
-//TODO: Connect to a DB
+/*
+*Program Data
+*/
+const char DB_NAME[32] = "terragrid.db"; 
+
 
 
 int main(int argc, char* argv[]) {
    sqlite3 *db;
-   char *zErrMsg = 0;
-   int rc;
+   int err;
 
-   rc = sqlite3_open("test.db", &db);
-
-   if( rc ) {
+   err = sqlite3_open(&DB_NAME[0], &db);
+   
+   if(err!= SQLITE_OK) {
       fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
       return(0);
-   } else {
-      fprintf(stderr, "Opened database successfully\n");
-   }
+   } 
+
+    
+   
+
+
    sqlite3_close(db);
 }
 
 
 //TODO: Create a table.
-#include <stdio.h>
-#include <stdlib.h>
-#include <sqlite3.h> 
 
 static int callback(void *NotUsed, int argc, char **argv, char **azColName) {
    int i;

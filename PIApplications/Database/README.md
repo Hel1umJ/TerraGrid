@@ -3,7 +3,7 @@ SQLite DB guide: https://pimylifeup.com/raspberry-pi-sqlite/
 
 
 Module:
-    ModuleCOORD char(10) --> (xx,yy,zz)
+    ModuleCOORD char(10) 
 
 
 
@@ -34,3 +34,7 @@ SQLite:
     -Commands: 
     sqlite3> .open [file].db: open the db, (or create the db and file.db if it doesnt exist)
     sqlite3> 
+
+
+    -Reading table data + using the sqlite3_exec() callback function to process data into a C++ DS: https://stackoverflow.com/questions/31146713/sqlite3-exec-callback-function-clarification
+
