@@ -1,3 +1,8 @@
-https://blog.logrocket.com/building-structuring-node-js-mvc-application/
+https://blog.logrocket.com/building-structuring-node-js-mvc-application/ (manual MVC)
 
-//express.js
+//Node: Just a standalone JS engine used to run external JS.
+
+//express.js -> (lightweight MVC + REST).
+    //Fireship guide: https://www.youtube.com/watch?v=-MTSQjw5DrM
+//React: frontend.
+
