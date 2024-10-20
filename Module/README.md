@@ -1,12 +1,14 @@
 #Description: This directory contains everything relevant to controlling an individual esp32 based unit of the modular plant grid. 
 
 #Hardware: 
-    -Esp32 Microcontroller
+    -Esp32 Microcontroller OR raspberry pi zero
 
 #Dependencies:
     -Platform.IO VSCode extension for flashing the esp32
 
     https://docs.platformio.org/en/stable/tutorials/espressif32/arduino_debugging_unit_testing.html#id2 
+
+    -#WiringPi library
 
 
 #Communication: 
@@ -20,3 +22,13 @@
     -Modularity has to be maintained, just by uploading a program to a new unit and plugging it into power/communication 
     channel it should seamlessly work and interface with the rest of the system. 
     -The number of modules should not be bounded. 
+
+#Raspberry Pi Zero V1.1 Wiring Diagram: 
+https://peppe8o.com/raspberry-pi-zero-pinout/
+
+#WiringPI documentation: 
+https://biicode-docs.readthedocs.io/raspberrypi/examples/wiringpi.html 
+
+
+
+
