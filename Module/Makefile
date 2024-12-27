@@ -9,6 +9,14 @@ WARNS=-Wall -pedantic -Wextra
 CFLAGS=-g3 -std=gnu11 ${WARNS}
 CPPFLAGS = -g3 -std=c++14 ${WARNS}
 
+all: module
+
+module: main
+
+main.o: main.c
+
+clean:
+	rm *.o
 
 
 
