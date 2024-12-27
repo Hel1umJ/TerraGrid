@@ -1,17 +1,14 @@
-#Description: This directory contains everything relevant to controlling an individual esp32 based unit of the modular plant grid. 
+#Description: This directory contains everything relevant to controlling an individual raspberry pi zero based unit of the modular plant grid. 
 
 #Hardware: 
-    -Esp32 Microcontroller OR raspberry pi zero
+    -Raspberry pi zero V1.1
+    -DHT11 Temperature & Humidity sensor
+    -Capacitative Moisture Sensor & MCP3008 B2D converters
+    -12v to 5V converter
+    -12V LED light bar
+    -12V Solenloid
 
-#Dependencies:
-    -Platform.IO VSCode extension for flashing the esp32
-
-    https://docs.platformio.org/en/stable/tutorials/espressif32/arduino_debugging_unit_testing.html#id2 
-
-    -#WiringPi library
-
-
-#Communication: 
+#Communication scheme: 
     -Hardwired: I2C over a 2 line communication channel.
     -Wireless: MQTT
         -Requires internet access for each individual module.
@@ -26,8 +23,27 @@
 #Raspberry Pi Zero V1.1 Wiring Diagram: 
 https://peppe8o.com/raspberry-pi-zero-pinout/
 
-#WiringPI documentation: 
-https://biicode-docs.readthedocs.io/raspberrypi/examples/wiringpi.html 
+
+#Dependencies:
+    -pigpio: https://abyz.me.uk/rpi/pigpio/
+        -Installation: place pigpio-master library file in a known location
+            wget https://github.com/joan2937/pigpio/archive/master.zip
+            unzip master.zip
+            cd pigpio-master
+            make
+            sudo make install
+
+            If the Python part of the install fails it may be because you need the setup tools.
+
+            sudo apt install python-setuptools python3-setuptools
+            sudo pacman -S python-setuptools
+
+        -Compilation:
+            -See example makefile in pigpio-master directory
+            -Set dynamic link path using command line option. Ex:
+                gcc -Wl,-rpath=/home/heliumj/Downloads/pigpio-master -o x_pigpio x_pigpio.o -L. -lpigpio -pthread -lrt
+
+
 
 
 
