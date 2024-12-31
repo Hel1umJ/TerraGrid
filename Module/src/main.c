@@ -13,7 +13,7 @@
 *External Lib includes
 */
 #include "pigpio.h"
-#include "pigpiod_if2.h"
+//#include "pigpiod_if2.h"
 //#include <wiringPi.h> //sudo apt install wiringpi
 
 /*
@@ -53,7 +53,11 @@ int main(int argc, char** argv){
     //Configure moduleID
     moduleID = 1;//TODO: hardcoded for testing purposes; change to a unique identifier using init procedure over mqtt to acknowledge existence of other modules.
 
-    gpioInitialise();
+    int status = gpioInitialise();
+
+    if(status != 0){
+        printf("gpio initialization failed");
+    }
 
     gpioSetMode(2,PI_OUTPUT);
     gpioWrite(2,0);
