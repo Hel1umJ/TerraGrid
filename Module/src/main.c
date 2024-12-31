@@ -13,6 +13,7 @@
 *External Lib includes
 */
 #include "pigpio.h"
+#include "config.h"
 //#include <wiringPi.h> //sudo apt install wiringpi
 
 /*
@@ -20,12 +21,9 @@
 */
 
 
-
 /*
 *Config variables.
 */
-#define moduleId rand()
-
 long moduleID;
 
 //lighting
@@ -40,7 +38,12 @@ int main(int argc, char** argv){
     /*
     *Setup
     */
+    //Configure moduleID
     moduleID = 1;//TODO: hardcoded for testing purposes; change to a unique identifier using init procedure over mqtt to acknowledge existence of other modules.
+
+    gpioInitialise();
+
+    gpioSetMode();
 
     /*
     *Read Sensor data
@@ -63,6 +66,8 @@ int main(int argc, char** argv){
     *Transmit log data via mqtt to central server
     */
 
+    gpioTerminate();
+    return 0;
 }
 
 
