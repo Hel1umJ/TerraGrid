@@ -15,11 +15,12 @@ BUILD_PATH = ./build
 
 all: module
 
+#only link libraries when building final executable; dont need to link when compiling into .o files
 module: main.o
-	${CC} ${CFLAGS} -o ./build/$@ ./build/$^
+	${CC} ${CFLAGS} -L/home/heliumj/Coding/lib/pigpio-master -o ./build/$@ ./build/$^ -lpigpiod_if2 -lrt -lpigpio
 
 main.o: ${SRC_PATH}/main.c
-	${CC} ${CFLAGS} -c -o ${BUILD_PATH}/$@ $^
+	${CC} ${CFLAGS} -c -o ${BUILD_PATH}/$@ $^ 
 
 clean:
 	rm ${BUILD_PATH}/*.o

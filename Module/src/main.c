@@ -13,6 +13,7 @@
 *External Lib includes
 */
 #include "pigpio.h"
+#include "pigpiod_if2.h"
 //#include <wiringPi.h> //sudo apt install wiringpi
 
 /*
@@ -38,6 +39,9 @@ long moduleID;
 
 
 //watering
+
+//Time
+#define DLST 1 //IF DLST, set to 1; 0 OW
 
 
 
@@ -143,12 +147,7 @@ void delay10(){
 
 
 
-///*
-//*Config variables.
-//*/
-//#define MODULE_ID 1 
 
-//#define DLST 1 //IF DLST, set to 1; 0 OW
 //#define WATER_DURATION 30 //seconds; Water for [config] seconds
 //#define LIGHT_ON 8.0F //hours; float number from [0,24], decimal for partial hours
 //#define LIGHT_OFF 21.0F //hours; float number from [0,24], decimal for partial hours
@@ -353,15 +352,15 @@ void delay10(){
     
 //  }
 
-  //this resets all values back to zero once 49 days have been reached. 
-  if(millis()>= 4233600000){
-    //reset all values back to zero. 
-    fiveSecondIntervals = 0;
-    lastWatering = 0;
-    lastLightToggle = 0;
-  }
+//  //this resets all values back to zero once 49 days have been reached. 
+//  if(millis()>= 4233600000){
+//    //reset all values back to zero. 
+//    fiveSecondIntervals = 0;
+//    lastWatering = 0;
+//    lastLightToggle = 0;
+//  }
   
-}
+//}
 
 //TODO: Serial read via A2D converter OR intermediate Arduino (built in A2D). 
   //https://www.switchdoc.com/2020/06/tutorial-capacitive-moisture-sensor-grove/ 
