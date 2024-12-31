@@ -53,11 +53,10 @@ int main(int argc, char** argv){
     //Configure moduleID
     moduleID = 1;//TODO: hardcoded for testing purposes; change to a unique identifier using init procedure over mqtt to acknowledge existence of other modules.
 
-    int status = gpioInitialise();
+    int rc = gpioInitialise();
 
-    if(status < 0){
-        printf("gpio initialization failed: %d", status);
-
+    if(rc < 0){
+        printf("gpio initialization failed: %d", rc);
     }
 
     gpioSetMode(2,PI_OUTPUT);
