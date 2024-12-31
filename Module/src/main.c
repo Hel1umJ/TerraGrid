@@ -13,12 +13,20 @@
 *External Lib includes
 */
 #include "pigpio.h"
-#include "config.h"
 //#include <wiringPi.h> //sudo apt install wiringpi
 
 /*
 *Projet includes
 */
+#include "config.h"
+
+/*
+*Prototypes
+*/
+//Returns the number of seconds elapsed over the current day.
+long int daySeconds();
+//Delays10ms
+void delay10();
 
 
 /*
@@ -43,8 +51,15 @@ int main(int argc, char** argv){
 
     gpioInitialise();
 
-    gpioSetMode();
+    gpioSetMode(2,PI_OUTPUT);
+    gpioWrite(2,0);
 
+    while(1){
+        gpioWrite(2,1);
+        delay10();
+        gpioWrite(2,0);
+        delay10();
+    }
     /*
     *Read Sensor data
     */
@@ -69,6 +84,58 @@ int main(int argc, char** argv){
     gpioTerminate();
     return 0;
 }
+
+
+//TODO: PUT INTO TIME UTILITIES
+long int daySeconds(){
+    time_t timer;
+    struct tm y2k = {0}; //Struct holding date for Jan 1, 2000, reference point
+    long int seconds;
+    y2k.tm_hour = 0;
+    y2k.tm_min = 0;
+    y2k.tm_sec = 0;
+    y2k.tm_year = 0;
+    y2k.tm_mon = 0;
+    y2k.tm_mday = 0;
+    y2k.tm_isdst = DLST;
+    time(&timer); //get current time, same as timer = time(NULL);
+    seconds = difftime(timer,mktime(&y2k));
+
+    
+    //Note: decimal DT cannot have % done on them, must be cast to discrete numerical 
+    //type first.
+    long int secondsToday = seconds%(24*60*60);
+
+    return secondsToday;
+}
+
+void delay10(){
+	long int secondsNow = time(NULL);
+	while((time(NULL) - secondsNow)<10 ){
+		;
+	}
+	printf("Delayed 10 seconds\n");
+	return;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -96,37 +163,19 @@ int main(int argc, char** argv){
 //#define DHT_PIN //GPIO19
 //#define MOISTURE_PIN //GPIO26
 
-
-///*
-//*Prototypes
-//*/
-////Returns the number of seconds elapsed over the current day.
-//long int daySeconds();
-////Delays10ms
-//void delay10();
-
-
 //int main(int argc, char* argv[]) {
 //    // Initialize WiringPi and pin modes + outputs
-//    wiringPiSetup();  // Initialize wiringPi
-//    //TODO: Init all pins.
-//    pinMode(SPEEDPIN, OUTPUT);  // Set pin as output
-//    pinMode();
-
-//    pinMode(DIR1, OUTPUT);
-//    pinMode(DIR2, OUTPUT);
-//    digitalWrite(SPEEDPIN,HIGH); //no analog write; digital write HIGH to set motor speed to max.
 
 //    long int openSeconds = openTime*60*60;
 //    long int closingSeconds = closingTime*60*60;
 
 //    //Infinite control loop
-    
+
 //    for(;;){
 //        long int doorActivationTime = 30;
-//	long int seconds = daySeconds();
-//	float hours = ((float)seconds)/(60*60);
-//	printf("Hours: %9.6f\n", hours);
+//        long int seconds = daySeconds();
+//        float hours = ((float)seconds)/(60*60);
+//        printf("Hours: %9.6f\n", hours);
 
 //        //TODO: put this if statement in a timer that makes sure door is open/closed (make it like 5 mins long)
 //        if((daySeconds() >= openSeconds) && (daySeconds() <= closingSeconds)){
@@ -154,36 +203,7 @@ int main(int argc, char** argv){
 //}
 
 
-//long int daySeconds(){
-//    time_t timer;
-//    struct tm y2k = {0}; //Struct holding date for Jan 1, 2000, reference point
-//    long int seconds;
-//    y2k.tm_hour = 0;
-//    y2k.tm_min = 0;
-//    y2k.tm_sec = 0;
-//    y2k.tm_year = 0;
-//    y2k.tm_mon = 0;
-//    y2k.tm_mday = 0;
-//    y2k.tm_isdst = DLST;
-//    time(&timer); //get current time, same as timer = time(NULL);
-//    seconds = difftime(timer,mktime(&y2k));
 
-    
-//    //Note: decimal DT cannot have % done on them, must be cast to discrete numerical 
-//    //type first.
-//    long int secondsToday = seconds%(24*60*60);
-
-//    return secondsToday;
-//}
-
-//void delay10(){
-//	long int secondsNow = time(NULL);
-//	while((time(NULL) - secondsNow)<10 ){
-//		;
-//	}
-//	printf("Delayed 10 seconds\n");
-//	return;
-//}
     
 
 
@@ -333,18 +353,18 @@ int main(int argc, char** argv){
     
 //  }
 
-//  //this resets all values back to zero once 49 days have been reached. 
-//  if(millis()>= 4233600000){
-//    //reset all values back to zero. 
-//    fiveSecondIntervals = 0;
-//    lastWatering = 0;
-//    lastLightToggle = 0;
-//  }
+  //this resets all values back to zero once 49 days have been reached. 
+  if(millis()>= 4233600000){
+    //reset all values back to zero. 
+    fiveSecondIntervals = 0;
+    lastWatering = 0;
+    lastLightToggle = 0;
+  }
   
-//}
+}
 
-////TODO: Serial read via A2D converter OR intermediate Arduino (built in A2D). 
-//  //https://www.switchdoc.com/2020/06/tutorial-capacitive-moisture-sensor-grove/ 
+//TODO: Serial read via A2D converter OR intermediate Arduino (built in A2D). 
+  //https://www.switchdoc.com/2020/06/tutorial-capacitive-moisture-sensor-grove/ 
 
 
 
