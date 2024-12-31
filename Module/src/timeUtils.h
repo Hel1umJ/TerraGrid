@@ -5,7 +5,7 @@
 *Prototypes
 */
 //Returns the number of seconds elapsed over the current day.
-long int daySeconds();
+long int secondsToday();
 //Delays10ms
 void delay10();
 

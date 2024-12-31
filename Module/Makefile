@@ -17,11 +17,13 @@ all: module
 
 #only link libraries when building final executable; dont need to link when compiling into .o files
 #${CC} ${CFLAGS} -L/home/heliumj/Coding/lib/pigpio-master -o ./build/$@ ./build/$^ -lpigpiod_if2 -lrt -lpigpio
-module: main.o
-	${CC} ${CFLAGS} -L/home/heliumj/Coding/lib/pigpio-master -o ./build/$@ ./build/$^ -lrt -lpigpio
-
+module: main.o timeUtils.o
+	${CC} ${CFLAGS} -L/home/heliumj/Coding/lib/pigpio-master -o ./build/$@ ./build/*.o -lrt -lpigpio
 
 main.o: ${SRC_PATH}/main.c
+	${CC} ${CFLAGS} -c -o ${BUILD_PATH}/$@ $^ 
+
+timeUtils.o: ${SRC_PATH}/timeUtils.c
 	${CC} ${CFLAGS} -c -o ${BUILD_PATH}/$@ $^ 
 
 clean:

@@ -24,7 +24,12 @@
 /*
 *Global variables
 */
+//general
 long moduleID;
+
+//light
+
+//water
 
 
 
@@ -47,8 +52,8 @@ int main(int argc, char** argv){
     gpioSetMode(LIGHT_PIN, PI_OUTPUT);
     gpioWrite(LIGHT_PIN, 0);
     
-
-    
+    //Super-loop
+    while(1){
     /*
     *Read Sensor data
     */
@@ -60,8 +65,8 @@ int main(int argc, char** argv){
     /*
     *Manipulate Hardware
     */
-
     //light bar
+
 
     //Solenoid
 
@@ -69,6 +74,7 @@ int main(int argc, char** argv){
     /*
     *Transmit log data via mqtt to central server
     */
+    }
 
     gpioTerminate();
     return 0;

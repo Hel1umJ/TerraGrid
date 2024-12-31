@@ -1,9 +1,10 @@
 //TODO: PUT INTO TIME UTILITIES
 
 #include <time.h>
+#include <stdio.h>
 #include "config.h"
 
-long int daySeconds(){
+long int secondsToday(){
     time_t timer;
     struct tm y2k = {0}; //Struct holding date for Jan 1, 2000, reference point
     long int seconds;
