@@ -6,6 +6,7 @@
         "pigpio.h": "c",
         "math.h": "c",
         "stdio.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "pigpiod_if2.h": "c"
     }
 }

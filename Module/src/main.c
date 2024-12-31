@@ -55,8 +55,9 @@ int main(int argc, char** argv){
 
     int status = gpioInitialise();
 
-    if(status != 0){
-        printf("gpio initialization failed");
+    if(status < 0){
+        printf("gpio initialization failed: %d", status);
+
     }
 
     gpioSetMode(2,PI_OUTPUT);
