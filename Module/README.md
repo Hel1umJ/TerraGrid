@@ -49,7 +49,7 @@ https://peppe8o.com/raspberry-pi-zero-pinout/
                 gcc -Wl,-rpath=/home/heliumj/Coding/lib/pigpio-master -o x_pigpio x_pigpio.o -L. -lpigpio -pthread -lrt
         
         -Execution:
-            1. execute the pigpio daemon process before executing any binaries that use pigpio (necessary for gpio functionality): (add to .bashrc)
+            1. add sudo /home/admin/TerraGrid/build/module to .bashrc to execute it automatically on startup.
            
 
 

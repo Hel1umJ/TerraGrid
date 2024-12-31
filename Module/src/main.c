@@ -13,36 +13,18 @@
 *External Lib includes
 */
 #include "pigpio.h"
-//#include "pigpiod_if2.h"
-//#include <wiringPi.h> //sudo apt install wiringpi
 
 /*
 *Projet includes
 */
 #include "config.h"
-
-/*
-*Prototypes
-*/
-//Returns the number of seconds elapsed over the current day.
-long int daySeconds();
-//Delays10ms
-void delay10();
+#include "timeUtils.h"
 
 
 /*
-*Config variables.
+*Global variables
 */
 long moduleID;
-
-//lighting
-
-
-//watering
-
-//Time
-#define DLST 1 //IF DLST, set to 1; 0 OW
-
 
 
 
@@ -53,21 +35,20 @@ int main(int argc, char** argv){
     //Configure moduleID
     moduleID = 1;//TODO: hardcoded for testing purposes; change to a unique identifier using init procedure over mqtt to acknowledge existence of other modules.
 
+    //setup pigpio & I/O pins
     int rc = gpioInitialise();
-
     if(rc < 0){
-        printf("gpio initialization failed: %d", rc);
+        printf("gpio initialization failed; Error code: %d", rc);
     }
 
-    gpioSetMode(2,PI_OUTPUT);
-    gpioWrite(2,0);
+    gpioSetMode(WATER_PIN, PI_OUTPUT);
+    gpioWrite(WATER_PIN, 0);
 
-    while(1){
-        gpioWrite(2,1);
-        delay10();
-        gpioWrite(2,0);
-        delay10();
-    }
+    gpioSetMode(LIGHT_PIN, PI_OUTPUT);
+    gpioWrite(LIGHT_PIN, 0);
+    
+
+    
     /*
     *Read Sensor data
     */
@@ -94,37 +75,6 @@ int main(int argc, char** argv){
 }
 
 
-//TODO: PUT INTO TIME UTILITIES
-long int daySeconds(){
-    time_t timer;
-    struct tm y2k = {0}; //Struct holding date for Jan 1, 2000, reference point
-    long int seconds;
-    y2k.tm_hour = 0;
-    y2k.tm_min = 0;
-    y2k.tm_sec = 0;
-    y2k.tm_year = 0;
-    y2k.tm_mon = 0;
-    y2k.tm_mday = 0;
-    y2k.tm_isdst = DLST;
-    time(&timer); //get current time, same as timer = time(NULL);
-    seconds = difftime(timer,mktime(&y2k));
-
-    
-    //Note: decimal DT cannot have % done on them, must be cast to discrete numerical 
-    //type first.
-    long int secondsToday = seconds%(24*60*60);
-
-    return secondsToday;
-}
-
-void delay10(){
-	long int secondsNow = time(NULL);
-	while((time(NULL) - secondsNow)<10 ){
-		;
-	}
-	printf("Delayed 10 seconds\n");
-	return;
-}
 
 
 
@@ -368,8 +318,3 @@ void delay10(){
 
 //TODO: Serial read via A2D converter OR intermediate Arduino (built in A2D). 
   //https://www.switchdoc.com/2020/06/tutorial-capacitive-moisture-sensor-grove/ 
-
-
-
-
-
