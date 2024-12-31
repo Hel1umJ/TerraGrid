@@ -26,22 +26,35 @@ https://peppe8o.com/raspberry-pi-zero-pinout/
 
 #Dependencies:
     -pigpio: https://abyz.me.uk/rpi/pigpio/
-        -Installation: place pigpio-master library file in a known location
-            wget https://github.com/joan2937/pigpio/archive/master.zip
-            unzip master.zip
-            cd pigpio-master
-            make
-            sudo make install
+        -Installation: place pigpio-master library file in a known location (/home/heliumj/Coding/lib)
+            1. Fetch + compile
+                wget https://github.com/joan2937/pigpio/archive/master.zip
+                unzip master.zip
+                cd pigpio-master
+                make
+                sudo make install
 
-            If the Python part of the install fails it may be because you need the setup tools.
+                If the Python part of the install fails it may be because you need the setup tools.
 
-            sudo apt install python-setuptools python3-setuptools
-            sudo pacman -S python-setuptools
+                sudo apt install python-setuptools python3-setuptools
+                sudo pacman -S python-setuptools
+
+            2. Update static linker & dynamic linker environment variables to make library visible to them (add these to .bashrc) (and then refresh terminal)
+                export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/heliumj/Coding/lib/pigpio-master
+                export LIBRARY_PATH=$LIBRARY_PATH:/home/heliumj/Coding/lib/pigpio-master
 
         -Compilation:
             -See example makefile in pigpio-master directory
-            -Set dynamic link path using command line option. Ex:
-                gcc -Wl,-rpath=/home/heliumj/Downloads/pigpio-master -o x_pigpio x_pigpio.o -L. -lpigpio -pthread -lrt
+            -Set dynamic link path using command line option: (Note: option no longer needed b/c of setting LD_LIBRARY_PATH and LIBRARY_PATH env variables) 
+                gcc -Wl,-rpath=/home/heliumj/Coding/lib/pigpio-master -o x_pigpio x_pigpio.o -L. -lpigpio -pthread -lrt
+        
+        -Execution:
+            1. execute the pigpio daemon process (necessary for gpio functionality) via pigpiopd or sudo pigpiod before executing any binaries that use pigpio
+
+
+
+
+
 
 
 

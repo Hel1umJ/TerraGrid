@@ -2,6 +2,10 @@
     "C_Cpp.default.compilerPath": "/usr/bin/g++",
     "files.associations": {
         "string": "cpp",
-        "time.h": "c"
+        "time.h": "c",
+        "pigpio.h": "c",
+        "math.h": "c",
+        "stdio.h": "c",
+        "stdlib.h": "c"
     }
 }

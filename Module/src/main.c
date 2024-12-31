@@ -6,28 +6,48 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 //#include <libwebsockets.h> //apt/pacman installs
 
 /*
 *External Lib includes
 */
-#include "../lib/pigpio-master/pigpio.h"
+#include "pigpio.h"
 //#include <wiringPi.h> //sudo apt install wiringpi
 
 /*
 *Projet includes
 */
 
-//1. Read sensor data
-//2. Interact with hardware
-//3. Transmit log data
+
+
+/*
+*Config variables.
+*/
+#define moduleId rand()
+
+long moduleID;
+
+//lighting
+
+
+//watering
+
+
+
+
 int main(int argc, char** argv){
+    /*
+    *Setup
+    */
+    moduleID = 1;//TODO: hardcoded for testing purposes; change to a unique identifier using init procedure over mqtt to acknowledge existence of other modules.
+
     /*
     *Read Sensor data
     */
 
     //DHT11 temp/humidity
-
+    
     //capacitive moisture sensor
 
     /*
@@ -40,7 +60,7 @@ int main(int argc, char** argv){
 
 
     /*
-    *Transmit sensor data
+    *Transmit log data via mqtt to central server
     */
 
 }
