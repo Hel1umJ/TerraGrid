@@ -15,14 +15,16 @@
 /*
 *Lighting
 */
-#define LIGHT_DURATION 10.5 //Float [0.0,24.0]; Num hours light should stay on for
-#define LIGHT_ENABLE 8//Float [0.0, 24.0]; time of day to turn on lights
+#define LIGHT_ENABLE 8.0//Float [0.0, 24.0]; time of day to turn on lights
+#define LIGHT_DISABLE 16.0//Float [0.0, 24.0]; time of day to turn on lights
 
 
 /*
 *Watering
 */
 #define WATER_DURATION 30 //Int; Seconds
+#define MOISTURE_THRESHOLD 128//TODO: Change to adequate level via testing 
+#define WATER_INTERVAL 5 //Int; Days
 
 /*
 *Time

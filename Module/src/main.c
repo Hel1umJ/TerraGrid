@@ -30,7 +30,7 @@ long moduleID;
 //light
 
 //water
-
+int lastWateringTime;
 
 
 int main(int argc, char** argv){
@@ -65,11 +65,25 @@ int main(int argc, char** argv){
     /*
     *Manipulate Hardware
     */
-    //light bar
+    //light actuation
+    double currentHour = secondsToday()/(60 * 60 * 24); //Hour (float)
+    if( (currentHour >= LIGHT_ENABLE) && (currentHour < LIGHT_DISABLE) ){
+        gpioWrite(LIGHT_PIN, 1); // Turn light on
+    } else {
+        gpioWrite(LIGHT_PIN, 0); // Turn light off
+    }
 
+    //Water solenoid actuation
+    static time_t lastWateringTime = 0;
+    time_t now = time(NULL);
+    double elapsed = difftime(now, lastWateringTime);
 
-    //Solenoid
-
+    if (elapsed >= (5 * 24 * 60 * 60)) { // 5 days in seconds
+        gpioWrite(WATER_PIN, 1); // Turn water on
+        sleep(WATER_DURATION);   // Wait for water duration
+        gpioWrite(WATER_PIN, 0); // Turn water off
+        lastWateringTime = now;  // Reset last watering time
+    }
 
     /*
     *Transmit log data via mqtt to central server
