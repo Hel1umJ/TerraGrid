@@ -30,7 +30,8 @@ long moduleID;
 //light
 
 //water
-int lastWateringTime;
+
+struct tm lastWateringTime = time(NULL);
 
 
 int main(int argc, char** argv){
@@ -74,13 +75,12 @@ int main(int argc, char** argv){
     }
 
     //Water solenoid actuation
-    static time_t lastWateringTime = 0;
     time_t now = time(NULL);
     double elapsed = difftime(now, lastWateringTime);
 
-    if (elapsed >= (5 * 24 * 60 * 60)) { // 5 days in seconds
+    if (elapsed >= (WATER_FAILSAFE_INTERVAL * 24 * 60 * 60)) { // 5 days in seconds
         gpioWrite(WATER_PIN, 1); // Turn water on
-        sleep(WATER_DURATION);   // Wait for water duration
+        delay(WATER_DURATION);   //TODO: Multithread this; replaced with call to sleep()
         gpioWrite(WATER_PIN, 0); // Turn water off
         lastWateringTime = now;  // Reset last watering time
     }

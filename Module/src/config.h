@@ -22,9 +22,9 @@
 /*
 *Watering
 */
-#define WATER_DURATION 30 //Int; Seconds
-#define MOISTURE_THRESHOLD 128//TODO: Change to adequate level via testing 
-#define WATER_INTERVAL 5 //Int; Days
+#define WATER_DURATION 16 //Int; Seconds
+#define WATER_MOISTURE_THRESHOLD 128//TODO: Change to adequate level via testing 
+#define WATER_FAILSAFE_INTERVAL 5 //Int; Days
 
 /*
 *Time
