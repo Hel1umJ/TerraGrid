@@ -77,8 +77,7 @@ int main(int argc, char** argv){
     //Water solenoid actuation
     time_t now = time(NULL);
     double elapsed = difftime(now, lastWateringTime);
-
-    if (elapsed >= (WATER_FAILSAFE_INTERVAL * 24 * 60 * 60)) { // 5 days in seconds
+    if ((elapsed >= (WATER_FAILSAFE_INTERVAL * 24 * 60 * 60)) || false) { // 5 days in seconds; TODO: replace "false" with sensor comparison
         gpioWrite(WATER_PIN, 1); // Turn water on
         delay(WATER_DURATION);   //TODO: Multithread this; replaced with call to sleep()
         gpioWrite(WATER_PIN, 0); // Turn water off
@@ -88,6 +87,8 @@ int main(int argc, char** argv){
     /*
     *Transmit log data via mqtt to central server
     */
+    
+
     }
 
     gpioTerminate();
