@@ -1,0 +1,4 @@
+user test
+# these are the topcis permitted for the user 'test'
+topic readwrite home/sensor_data
+topic readwrite modules/1
