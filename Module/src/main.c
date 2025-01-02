@@ -13,6 +13,7 @@
 *External Lib includes
 */
 #include "pigpio.h"
+#include "MQTTClient.h"
 
 /*
 *Projet includes

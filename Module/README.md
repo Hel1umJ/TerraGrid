@@ -64,11 +64,11 @@
 
     -Eclipse Paho C MQTT Client Library: https://www.hivemq.com/blog/implementing-mqtt-in-c/ 
         -Installation: 
-            git clone https://git.eclipse.org/r/paho/org.eclipse.paho.mqtt.c
+            git clone https://github.com/eclipse-paho/paho.mqtt.c.git
             make
             sudo make install
 
-        
+        -
 
 
 

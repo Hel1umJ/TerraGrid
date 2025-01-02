@@ -18,7 +18,7 @@ all: module
 #only link libraries when building final executable; dont need to link when compiling into .o files
 #${CC} ${CFLAGS} -L/home/heliumj/Coding/lib/pigpio-master -o ./build/$@ ./build/$^ -lpigpiod_if2 -lrt -lpigpio
 module: main.o timeUtils.o
-	${CC} ${CFLAGS} -L/home/heliumj/Coding/lib/pigpio-master -o ./build/$@ ./build/*.o -lrt -lpigpio
+	${CC} ${CFLAGS} -L/home/heliumj/Coding/lib/pigpio-master -o ./build/$@ ./build/*.o -lrt -lpigpio -lpaho-mqtt3c
 
 main.o: ${SRC_PATH}/main.c
 	${CC} ${CFLAGS} -c -o ${BUILD_PATH}/$@ $^ 
