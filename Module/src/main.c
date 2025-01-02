@@ -31,7 +31,7 @@ long moduleID;
 
 //water
 
-struct tm lastWateringTime = time(NULL);
+time_t lastWateringTime;
 
 
 int main(int argc, char** argv){
@@ -40,6 +40,7 @@ int main(int argc, char** argv){
     */
     //Configure moduleID
     moduleID = 1;//TODO: hardcoded for testing purposes; change to a unique identifier using init procedure over mqtt to acknowledge existence of other modules.
+    lastWateringTime = time(NULL);
 
     //setup pigpio & I/O pins
     int rc = gpioInitialise();
@@ -77,7 +78,7 @@ int main(int argc, char** argv){
     //Water solenoid actuation
     time_t now = time(NULL);
     double elapsed = difftime(now, lastWateringTime);
-    if ((elapsed >= (WATER_FAILSAFE_INTERVAL * 24 * 60 * 60)) || false) { // 5 days in seconds; TODO: replace "false" with sensor comparison
+    if ((elapsed >= (WATER_FAILSAFE_INTERVAL * 24 * 60 * 60)) || 0) { // 5 days in seconds; TODO: replace "0" (false) with sensor comparison
         gpioWrite(WATER_PIN, 1); // Turn water on
         delay(WATER_DURATION);   //TODO: Multithread this; replaced with call to sleep()
         gpioWrite(WATER_PIN, 0); // Turn water off
