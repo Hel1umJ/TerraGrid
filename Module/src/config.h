@@ -31,5 +31,13 @@
 */
 #define DLST 0 //IF DLST, set to 1; 0 OW
 
+/*
+*MQTT
+*/
+/* Change these to match your setup */
+#define BROKER_ADDRESS  "tcp://192.168.1.100:1883"  // IP of RPI5; broker service running on port 1883
+#define QOS         2 //Quality Of Service; 0: at most once (no confirmation receipt from broker) 1: at least once (retry sending until receives confirmation from broker; can have duplicates) 2: exactly once
+#define TIMEOUT     10000L
+
 
 #endif

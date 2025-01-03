@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include <string.h>
 //#include <libwebsockets.h> //apt/pacman installs
 
 /*
@@ -20,19 +21,24 @@
 */
 #include "config.h"
 #include "timeUtils.h"
-
+#include "hashUtils.h"
 
 /*
 *Global variables
 */
-//general
-long moduleID;
+//General
 
-//light
 
-//water
+//Light
 
+
+//Water
 time_t lastWateringTime;
+
+//MQTT Client
+char clientID[64];
+char TOPIC[64] = "moduleLog";
+char PAYLOAD[64] = "Hello from Pi Zero W (C client)";
 
 
 int main(int argc, char** argv){
@@ -40,20 +46,39 @@ int main(int argc, char** argv){
     *Setup
     */
     //Configure moduleID
-    moduleID = 1;//TODO: hardcoded for testing purposes; change to a unique identifier using init procedure over mqtt to acknowledge existence of other modules.
+    strcpy(&clientID[0], generate_random_string(64)); //P of duplicate clientID is 1/(5*e^114)
+
     lastWateringTime = time(NULL);
 
     //setup pigpio & I/O pins
-    int rc = gpioInitialise();
-    if(rc < 0){
-        printf("gpio initialization failed; Error code: %d", rc);
-    }
-
+    if(gpioInitialise() < 0){printf("gpio initialization failed");}
     gpioSetMode(WATER_PIN, PI_OUTPUT);
     gpioWrite(WATER_PIN, 0);
 
     gpioSetMode(LIGHT_PIN, PI_OUTPUT);
     gpioWrite(LIGHT_PIN, 0);
+
+
+    //MQTT
+    MQTTClient client;
+    MQTTClient_connectOptions conn_opts = MQTTClient_connectOptions_initializer;
+    MQTTClient_message pubmsg = MQTTClient_message_initializer;
+    MQTTClient_deliveryToken token;
+    int rc;
+
+    /* Create an MQTT client */
+    MQTTClient_create(&client, &BROKER_ADDRESS[0], &clientID[0], MQTTCLIENT_PERSISTENCE_NONE, NULL);
+
+    /* Set up connection options */
+    conn_opts.keepAliveInterval = 20;
+    conn_opts.cleansession = 1;
+
+    /* Connect to the broker */
+    if ((rc = MQTTClient_connect(client, &conn_opts)) != MQTTCLIENT_SUCCESS) {
+        printf("Failed to connect, return code %d\n", rc);
+        exit(EXIT_FAILURE);
+    }
+    printf("Connected to MQTT broker at %s\n", &BROKER_ADDRESS[0]);
     
     //Super-loop
     while(1){
@@ -89,11 +114,25 @@ int main(int argc, char** argv){
     /*
     *Transmit log data via mqtt to central server
     */
-    
+    /* Prepare the message */
+    pubmsg.payload = (char *)PAYLOAD;
+    pubmsg.payloadlen = (int)strlen(PAYLOAD);
+    pubmsg.qos = QOS;
+    pubmsg.retained = 0;
+
+    /* Publish the message */
+    MQTTClient_publishMessage(client, TOPIC, &pubmsg, &token);
+    printf("Publishing message: %s\n", PAYLOAD);
+
+    /* Wait for the message to be delivered */
+    rc = MQTTClient_waitForCompletion(client, token, TIMEOUT);
+    printf("Message with delivery token %d delivered\n", token);
 
     }
 
     gpioTerminate();
+    MQTTClient_disconnect(client, 10000);
+    MQTTClient_destroy(&client);
     return 0;
 }
 
