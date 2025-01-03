@@ -9,6 +9,8 @@
         "stdlib.h": "c",
         "pigpiod_if2.h": "c",
         "config.h": "c",
-        "timeutils.h": "c"
+        "timeutils.h": "c",
+        "mqttclient.h": "c",
+        "functional": "cpp"
     }
 }
